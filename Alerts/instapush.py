@@ -7,8 +7,8 @@ from StringIO import StringIO
 class InstaPush:    
     def __init__(self):
         """ Constructor of this class """
-        self.app_id = ""
-        self.app_secret = ""
+        self.app_id = "" # Enter your instapush's app id 
+        self.app_secret = "" # Enter your instapush's secret key
         self.push_event = "IntruderAlert"
         self.api_url = "https://api.instapush.im/v1/post"
     
