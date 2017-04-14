@@ -1,8 +1,8 @@
 # A sample that demonstrate Motion Detection
 # through using PIR as the sensor, on Raspberry Pi
 
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -18,6 +18,16 @@ previous_state = 0
 def read_pir():
     return GPIO.input(GPIO_PIR)
 
+# Actions to execute when intruders are detected
+def on_intruders_detected():
+    # TODO: Implement actions against intruders. 
+    #   Options:
+    #       1. Send push notification to iOS / Android phone. 
+    #       2. Send email 
+    #       3. Tweet 
+    #       4. Turn on camera module, then capture picture/short video against the intruders and sent it to iOS/Android Phones.
+    #       5. Many more
+
 # Main program
 try:
     print("Waiting for PIR to settle ...")
@@ -31,6 +41,7 @@ try:
         if current_state == 1 and previous_state == 0:
             print("	Intruders detected!")
             # TODO: Do alerts or other actions here, for some time
+            on_intruders_detected()
             previous_state = 1
         elif current_state == 0 and previous_state == 1:
             print("	Ready")
