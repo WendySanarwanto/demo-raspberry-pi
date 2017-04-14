@@ -19,18 +19,22 @@ def read_pir():
 
 # A helper for composing messages to displays in sent alerts
 def compose_alert_message():
-    current_timestamp = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
-    return "Intruders detected  ! Timestamp: " + current_timestamp
+    now = datetime.datetime.now()
+    current_timestamp = now.strftime("%A, %d. %B %Y %I:%M%p")
+    message = "==========================================\n"
+    message += " Intruders detected  !\n Timestamp: " + current_timestamp
+    message += "\n=========================================="
+    return message
 
 
-# A helper for generating 
+# A helper for generating
 # Actions to execute when intruders are detected
-def on_intruders_detected():        
-    alert_message = compose_alert_message();
+def on_intruders_detected():
+    alert_message = compose_alert_message()
     print(alert_message)
-    
+
     # TODO: Do alerts or other actions here, for some time
-    
+
     # TODO: Implement actions against intruders.
     #   Options:
     #       1. Send push notification to iOS / Android phone.
@@ -45,11 +49,12 @@ def on_intruders_detected():
 try:
     current_state = 0
     previous_state = 0
+    ready_message = "\n Ready ...\n"
 
-    print("Waiting for PIR to settle ...")
+    print("\n Waiting for PIR to settle ...\n")
     while read_pir() == 1:
         current_state = 0
-        print("	Ready")
+        print(ready_message)
 
     while True:
         current_state = read_pir()
@@ -58,10 +63,10 @@ try:
             on_intruders_detected()
             previous_state = 1
         elif current_state == 0 and previous_state == 1:
-            print("	Ready")
+            print(ready_message)
             previous_state = 0
             time.sleep(0.001)
 
 except KeyboardInterrupt:
-    print("	Quit")
+    print("\n Quit")
     GPIO.cleanup()
