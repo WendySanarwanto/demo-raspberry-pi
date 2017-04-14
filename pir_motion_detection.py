@@ -4,8 +4,8 @@
 import time
 import datetime
 import RPi.GPIO as GPIO
-
-from Alerts.instapush import InstaPush
+# import Alerts.InstaPush as InstaPush
+from Alerts import InstaPush
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -15,7 +15,10 @@ GPIO.setup(GPIO_PIR, GPIO.IN)     # Read output from PIR motion sensor
 
 
 def read_pir():
-    """ A helper for reading value on GPIO pin that is connected to PIR's output PIN """
+    """
+        A helper for reading value on GPIO pin,
+        that is connected to PIR's output PIN
+    """
     return GPIO.input(GPIO_PIR)
 
 
@@ -33,11 +36,11 @@ def push_notification(alert_message):
     """ A helper for pushing alert to registered iOS/Android devices """
     insta_push = InstaPush()
     response = insta_push.request_push_notification(alert_message)
-    print("D push notification's response = "+str(response))    
+    print(("D push notification's response = " + str(response)))
 
 
 def on_intruders_detected():
-    """ 
+    """
         A helper for generating actions to execute,
         when intruders are detected
     """
