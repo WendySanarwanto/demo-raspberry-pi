@@ -2,6 +2,7 @@
 # through using PIR as the sensor, on Raspberry Pi
 
 import time
+import datetime
 import RPi.GPIO as GPIO
 
 GPIO.setwarnings(False)
@@ -16,8 +17,20 @@ def read_pir():
     return GPIO.input(GPIO_PIR)
 
 
+# A helper for composing messages to displays in sent alerts
+def compose_alert_message():
+    current_timestamp = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
+    return "Intruders detected  ! Timestamp: " + current_timestamp
+
+
+# A helper for generating 
 # Actions to execute when intruders are detected
-def on_intruders_detected():
+def on_intruders_detected():        
+    alert_message = compose_alert_message();
+    print(alert_message)
+    
+    # TODO: Do alerts or other actions here, for some time
+    
     # TODO: Implement actions against intruders.
     #   Options:
     #       1. Send push notification to iOS / Android phone.
@@ -42,8 +55,6 @@ try:
         current_state = read_pir()
         #print "D current_state= " + str(current_state)
         if current_state == 1 and previous_state == 0:
-            print("	Intruders detected!")
-            # TODO: Do alerts or other actions here, for some time
             on_intruders_detected()
             previous_state = 1
         elif current_state == 0 and previous_state == 1:
