@@ -26,30 +26,31 @@ def on_intruders_detected():
     #       4. Turn on camera module, then capture picture/short video against
     #          the intruders and sent it to iOS/Android Phones
     #       5. Many more
+    return "Implement this"
 
 # Main program
-    try:
+try:
+    current_state = 0
+    previous_state = 0
+
+    print("Waiting for PIR to settle ...")
+    while read_pir() == 1:
         current_state = 0
-        previous_state = 0
+        print("	Ready")
 
-        print("Waiting for PIR to settle ...")
-        while read_pir() == 1:
-            current_state = 0
+    while True:
+        current_state = read_pir()
+        #print "D current_state= " + str(current_state)
+        if current_state == 1 and previous_state == 0:
+            print("	Intruders detected!")
+            # TODO: Do alerts or other actions here, for some time
+            on_intruders_detected()
+            previous_state = 1
+        elif current_state == 0 and previous_state == 1:
             print("	Ready")
+            previous_state = 0
+            time.sleep(0.001)
 
-        while True:
-            current_state = read_pir()
-            #print "D current_state= " + str(current_state)
-            if current_state == 1 and previous_state == 0:
-                print("	Intruders detected!")
-                # TODO: Do alerts or other actions here, for some time
-                on_intruders_detected()
-                previous_state = 1
-            elif current_state == 0 and previous_state == 1:
-                print("	Ready")
-                previous_state = 0
-                time.sleep(0.001)
-
-    except KeyboardInterrupt:
-        print("	Quit")
-        GPIO.cleanup()
+except KeyboardInterrupt:
+    print("	Quit")
+    GPIO.cleanup()
