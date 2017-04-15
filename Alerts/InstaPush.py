@@ -1,9 +1,10 @@
-from ..Utility import Curl
+from Utility import Curl
 
 
 class InstaPush:
     """
         Provide access to push notification service, provided by InstaPush.
+        See: https://instapush.im
     """
 
     def __init__(self):
@@ -11,7 +12,6 @@ class InstaPush:
         self.app_id = ""  # Enter your instapush's app id
         self.app_secret = ""  # Enter your instapush's secret key
         self.push_event = "IntruderAlert"
-        #self.api_url = "https://api.instapush.im/v1/post"
         self.api_url = "https://api.instapush.im/v1"
         self.push_notification_path = "/post"
 
