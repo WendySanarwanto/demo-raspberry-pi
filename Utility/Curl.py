@@ -9,13 +9,13 @@ class Curl:
         Provide methods for invoking REST API Resources through using Curl.
     """
 
-    def __init__(self, api_url, verbose = True, enable_ipv4 = False):
+    def __init__(self, api_url, verbose=True, enable_ipv4=False):
         """ Constructor of this class """
         self.api_url = api_url
         self.verbose = verbose
         self.enable_ipv4 = enable_ipv4
 
-    def do_post(request, http_headers, resource_path):
+    def do_post(self, request, http_headers, resource_path):
         """ Invoke API Resource whose HTTP verb is POST. """
         response_buffer = StringIO()
         postfields = json.dumps(request)

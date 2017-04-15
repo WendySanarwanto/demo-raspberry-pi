@@ -1,8 +1,5 @@
-import pycurl
-import json
-from StringIO import StringIO
-# from io import StringIO
 from ..Utility import Curl
+
 
 class InstaPush:
     """
@@ -30,6 +27,6 @@ class InstaPush:
 
         http_headers = ['x-instapush-appid: ' + self.app_id, 'x-instapush-appsecret: ' + self.app_secret, 'Content-Type: application/json']
 
-        curl = Curl(api_url, True, True)
+        curl = Curl(self.api_url, True, True)
 
         return curl.do_post(request, http_headers, self.push_notification_path)
