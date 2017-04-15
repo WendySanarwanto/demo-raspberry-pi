@@ -4,24 +4,9 @@
 import time
 import datetime
 import RPi.GPIO as GPIO
-import sys
 
-# import Alerts.InstaPush as InstaPush
 from Alerts import InstaPush
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-#GPIO.setmode(GPIO.BCM)
-GPIO_PIR = 11
-GPIO.setup(GPIO_PIR, GPIO.IN)     # Read output from PIR motion sensor
-
-
-def read_pir():
-    """
-        A helper for reading value on GPIO pin,
-        that is connected to PIR's output PIN
-    """
-    return GPIO.input(GPIO_PIR)
+from Sensors import PIR
 
 
 def compose_alert_message():
@@ -68,18 +53,19 @@ def on_intruders_detected():
 
 # Main program
 def main():
+    sensor = PIR(GPIO.BOARD, False)
     try:
         current_state = 0
         previous_state = 0
         ready_message = "\n Ready ...\n"
 
         print("\n Waiting for PIR to settle ...\n")
-        while read_pir() == 1:
+        while sensor.do_read() == 1:
             current_state = 0
             print(ready_message)
 
         while True:
-            current_state = read_pir()
+            current_state = sensor.do_read()
             #print "D current_state= " + str(current_state)
             if current_state == 1 and previous_state == 0:
                 on_intruders_detected()
@@ -91,7 +77,7 @@ def main():
 
     except KeyboardInterrupt:
         print("\n Quit")
-        GPIO.cleanup()
+        sensor.do_cleanup()
 
 if __name__ == '__main__':
     main()
