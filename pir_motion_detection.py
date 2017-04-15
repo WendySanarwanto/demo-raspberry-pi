@@ -4,6 +4,8 @@
 import time
 import datetime
 import RPi.GPIO as GPIO
+import sys
+
 # import Alerts.InstaPush as InstaPush
 from Alerts import InstaPush
 
@@ -26,9 +28,8 @@ def compose_alert_message():
     """ A helper for composing messages to displays in sent alerts """
     now = datetime.datetime.now()
     current_timestamp = now.strftime("%A, %d. %B %Y %I:%M%p")
-    message = "==========================================\n"
-    message += " Intruders detected  !\n Timestamp: " + current_timestamp
-    message += "\n=========================================="
+    message = "\n Intruders detected  !\n Timestamp: " + current_timestamp
+    message += "\n"
     return message
 
 
@@ -47,8 +48,12 @@ def on_intruders_detected():
     alert_message = compose_alert_message()
     print(alert_message)
 
-    #send push notification to iOS / Android
-    push_notification(alert_message)
+    try:
+        #send push notification to iOS / Android
+        push_notification(alert_message)
+    except:
+        print("Unexpected error when sending alert.")
+
 
     # TODO: Do alerts or other actions here, for some time
 

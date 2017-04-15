@@ -35,6 +35,7 @@ class InstaPush:
         curl.setopt(curl.POSTFIELDS, postfields)
         curl.setopt(curl.WRITEFUNCTION, response_buffer.write)
         curl.setopt(curl.VERBOSE, True)
+        curl.setopt(curl.IPRESOLVE, curl.IPRESOLVE_V4)
 
         curl.perform()
 
