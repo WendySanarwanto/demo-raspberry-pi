@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 
+
 class PIR:
     """
         Provide services to read outputs from attached PIR Sensor
@@ -10,13 +11,13 @@ class PIR:
         # initialise the GPIO
         GPIO.setwarnings(gpio_warnings)
         GPIO.setmode(gpio_mode)
-        self.GPIO_PIR = 11 #GPIO Pin's number, attached to PIR's output rail.
-        self.GPIO.setup(self.GPIO_PIR, GPIO.IN) # Read output from PIR motion sensor
+        self.GPIO_PIR = 11  # GPIO Pin's number, attached to PIR's output rail.
+        self.GPIO.setup(self.GPIO_PIR, GPIO.IN)  # Read output from PIR motion sensor
 
-    def do_read():
+    def do_read(self):
         """ Reading value on GPIO pin, that is connector to PIR's output rail. """
         return GPIO.input(self.GPIO_PIR)
-    
-    def do_cleanup():
+
+    def do_cleanup(self):
         """ de-initialise claimed GPIO's resources """
         GPIO.cleanup()
