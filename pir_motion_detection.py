@@ -1,5 +1,9 @@
 # A sample that demonstrate Motion Detection
 # through using PIR as the sensor, on Raspberry Pi
+# Instructions:
+# 1. Install pyCurl library: `sudo apt-get install python-pycurl
+# 2. Run the program: `pyton pir*.py`
+# 3. Start this program as a SystemD Daemon: See instructions in `daemon/lib/systemd/system/motion_detection.service`
 
 import time
 import datetime
