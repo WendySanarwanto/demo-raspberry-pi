@@ -1,0 +1,10 @@
+[Unit]
+Description=PIR based Motion Detection service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/Documents/python/demo-raspberry-pi
+
+[Install]
+WantedBy=multi-user.target
