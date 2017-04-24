@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/python /home/pi/Documents/python/demo-raspberry-pi/pir_motion_detection.py
+ExecStart=/usr/bin/python /home/pi/Documents/python/demo-raspberry-pi/pir_motion_detection.py > /home/pi/Documents/logs/motion_detection/logs.text 2>&1
 
 [Install]
 WantedBy=multi-user.target
