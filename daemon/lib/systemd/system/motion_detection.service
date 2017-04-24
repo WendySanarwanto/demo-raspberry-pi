@@ -1,3 +1,10 @@
+# Instructions:
+# 1. Adjust the path(s) defined in `ExecStart` entry then save the file.
+# 2. Copy the changed `.service` file to `/lib/systemd/system` directory.
+# 3. Run these commands: `sudo systemctl daemon-reload && sudo systemctl enable motion_detection.service`
+# 4. Reboot the pi: `sudo reboot`
+# 5. Checking status of the service: `sudo systemctl status motion_detection.service`
+
 [Unit]
 Description=PIR based Motion Detection service
 After=multi-user.target
