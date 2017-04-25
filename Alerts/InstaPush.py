@@ -7,11 +7,11 @@ class InstaPush:
         See: https://instapush.im
     """
 
-    def __init__(self):
+    def __init__(self, app_id="", app_secret="", push_event=""):
         """ Constructor of this class """
-        self.app_id = ""  # Enter your instapush's app id
-        self.app_secret = ""  # Enter your instapush's secret key
-        self.push_event = "IntruderAlert"
+        self.app_id = app_id
+        self.app_secret = app_secret
+        self.push_event = push_event
         self.api_url = "https://api.instapush.im/v1"
         self.push_notification_path = "/post"
 

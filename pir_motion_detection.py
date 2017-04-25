@@ -24,7 +24,11 @@ def compose_alert_message():
 
 def push_notification(alert_message):
     """ A helper for pushing alert to registered iOS/Android devices """
-    insta_push = InstaPush()
+    app_id = ""  # Enter your instapush's app id
+    app_secret = ""  # Enter your instapush's secret key
+    push_event = "IntruderAlert" # Default name of instaPush's event to be used for pushing notification from.
+    
+    insta_push = InstaPush(app_id, app_secret, push_event)
     response = insta_push.request_push_notification(alert_message)
     print(("D push notification's response = " + str(response)))
 
