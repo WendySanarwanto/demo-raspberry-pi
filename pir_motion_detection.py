@@ -9,14 +9,14 @@ import time
 import datetime
 import RPi.GPIO as GPIO
 
-from Alerts import InstaPush
+from Alerts import InstaPush, Gmail
 from Sensors import PIR
+from Utility import get_current_timestamp
 
 
 def compose_alert_message():
     """ A helper for composing messages to displays in sent alerts """
-    now = datetime.datetime.now()
-    current_timestamp = now.strftime("%A, %d. %B %Y %I:%M%p")
+    current_timestamp = get_current_timestamp()
     message = "\n Intruders detected  !\n Timestamp: " + current_timestamp
     message += "\n"
     return message
@@ -32,6 +32,15 @@ def push_notification(alert_message):
     response = insta_push.request_push_notification(alert_message)
     print(("D push notification's response = " + str(response)))
 
+def send_email():
+    """ A helper for sending alert as email, via google mail """
+    sender_email_address = "" # Enter sender's email address here
+    destination_email_address = ""  # Enter recipient's email address here
+    user = "" # Enter smtp's user 
+    password = "" # enter smtp's password
+    gmail = Gmail(sender_email_address, destination_email_address, user, password);
+    response = gmail.send_alert()
+
 
 def on_intruders_detected():
     """
@@ -44,6 +53,9 @@ def on_intruders_detected():
     try:
         #send push notification to iOS / Android
         push_notification(alert_message)
+
+        #send email (gmail) alert
+        send_email()
     except:
         print("Unexpected error when sending alert.")
 
