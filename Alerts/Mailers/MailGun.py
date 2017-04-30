@@ -9,7 +9,7 @@ class MailGun:
     def __init__(self, domain, api_key):
         """ Constructor of 'MailGunClient' class"""
         self.api_url = "https://api.mailgun.net/v3/%s" % domain
-        print "api_url = %s" % self.api_url
+        # print "api_url = %s" % self.api_url
         self.messages_resource_path = "/messages"
         self.api_key = api_key
 
