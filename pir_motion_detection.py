@@ -24,7 +24,7 @@ def send_email():
     recipient_name = ""  # TODO: Write down recipient's name (e.g. Jane Doe)
     email_client = MailGun(domain, api_key)
 
-    _from = "%s<%s>@%s" % (sender_full_name, sender_name, domain)
+    _from = "%s<%s@%s>" % (sender_full_name, sender_name, domain)
     to = "" # TODO: Write down the recipient's email address (e.g. john.doe@gmail.com)
     subject = "[Motion Detection] Intruders detected !"
     text = """ \
@@ -48,9 +48,10 @@ def on_intruders_detected():
         #TODO: send push notification to iOS / Android
 
         #send email alert
-        send_email()
+        response = send_email()
+        print("Sending alert's Response: %s" % response)
     except:
-        print("Unexpected error when sending alert.")
+        print("Unexpected error happened when sending alert at: " % get_current_timestamp())
 
 
     # TODO: Do alerts or other actions here, for some time
