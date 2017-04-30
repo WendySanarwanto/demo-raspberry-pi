@@ -1,6 +1,6 @@
 import unittest
 import mock
-import smtplib
+#import smtplib
 
 from Gmail import Gmail
 
@@ -28,18 +28,21 @@ class SmtpMock:
     def close(self):
         self.close_is_called = True
 
+
 class FailingSmtpMock(SmtpMock):
     def sendmail(self, sender_mail_address, recipient_mail_addree, email_text):
         self.sendmail_is_called = False
         raise Exception("Sending Mail is failing")
+
 
 # class ExecInfo:
 def __getitem__(index):
     result = ["Sending Mail is failing"]
     return result
 
+
 class GmailTestSuite(unittest.TestCase):
-    
+
     def test_it_should_be_instatiable(self):
         # Arrange
         sender_email_address = "sender@gmail.com"
@@ -89,7 +92,7 @@ class GmailTestSuite(unittest.TestCase):
         self.assertTrue(smtp_mock.login_is_called)
         self.assertTrue(smtp_mock.sendmail_is_called)
         self.assertTrue(smtp_mock.close_is_called)
-    
+
     @mock.patch('smtplib.SMTP', side_effect=FailingSmtpMock)
     @mock.patch('sys.exc_info', side_effect=__getitem__)
     def test_it_should_return_error_when_sending_mail_process_is_failing(self, smtp_mock, exec_info):
@@ -103,13 +106,13 @@ class GmailTestSuite(unittest.TestCase):
 
         # Act
         response = gmail.send_alert()
-        # print response 
+        # print response
 
         # Assert
-        # self.assertEqual(response, expected_response)     
+        # self.assertEqual(response, expected_response)
         self.assertNotEqual(response, "Email notification alert has been sent.")
 
 # suite = unittest.TestLoader().loadTestsFromTestCase(GmailTestSuite)
-# unittest.TextTestRunner(verbosity=2).run(suite)      
+# unittest.TextTestRunner(verbosity=2).run(suite)
 # if __name__ == '__main__':
 #     unittest.main()

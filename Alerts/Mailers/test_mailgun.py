@@ -1,5 +1,4 @@
 # Unit tests of MailGun class
-import mock
 import requests
 import uuid
 from Alerts.Mailers import MailGun
@@ -23,18 +22,20 @@ My Domain's Administrator
 """
 email_client = MailGun(domain, api_key)
 
+
 def test_should_be_able_sending_email_successfully(monkeypatch):
     # Arrange
     def mocked_send_email_return(url, auth, data):
         return success_response
 
     monkeypatch.setattr(requests, 'post', mocked_send_email_return)
-        
+
     # Act
     response = email_client.send_mail(_from, to, subject, text)
 
     # Assert
     assert response == success_response
+
 
 def test_should_return_error_response_when_sending_email_is_failing(monkeypatch):
     # Arrange

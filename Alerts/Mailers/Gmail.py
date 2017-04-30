@@ -7,7 +7,7 @@ class Gmail:
     """
         Provide access to email notification service, provided by Gmail.
         See: http://stackabuse.com/how-to-send-emails-with-gmail-using-python/
-    """    
+    """
 
     def __init__(self, sender_email_address, destination_email_address, user, password):
         self.smtp_host = "smtp.gmail.com"
@@ -23,12 +23,12 @@ class Gmail:
 
         %s
         """
-    
+
     def send_alert(self):
         try:
             email_text = self._compose_email_text()
 
-            server = smtplib.SMTP(self.smtp_host, self.smtp_port)    
+            server = smtplib.SMTP(self.smtp_host, self.smtp_port)
             server.ehlo()
             server.starttls()
             server.login(self.smtp_user, self.smtp_password)
@@ -38,10 +38,10 @@ class Gmail:
             return "Email notification alert has been sent."
         except:
             return "Unexpected error occurs:", sys.exc_info[0]
-        
+
     def _compose_email_text(self):
         email_body_message = """\
-        Hello, 
+        Hello,
 
         One of your IoT Motion Detection device has detected intruders that happened at: %s
 
@@ -52,4 +52,3 @@ class Gmail:
         email_subject = "[Motion Detection] Intruders detected!"
         email_text = self.email_body_template % (self.sender_email_address, self.destination_email_address, email_subject, email_body_message)
         return email_text
-    

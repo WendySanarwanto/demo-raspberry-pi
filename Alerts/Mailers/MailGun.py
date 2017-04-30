@@ -20,7 +20,7 @@ class MailGun:
         response = ""
         try:
             response = requests.post(
-                        self.api_url + self.messages_resource_path, 
+                        self.api_url + self.messages_resource_path,
                         auth=("api", self.api_key),
                         data={"from": _from,
                             "to": to,
