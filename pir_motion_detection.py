@@ -8,7 +8,6 @@
 import time
 import RPi.GPIO as GPIO
 
-from Alerts.InstaPush import InstaPush
 from Alerts.Mailers import MailGun
 from Sensors import PIR
 from Utility import get_current_timestamp
@@ -45,9 +44,6 @@ def on_intruders_detected():
         A helper for generating actions to execute,
         when intruders are detected
     """
-    alert_message = compose_alert_message()
-    print(alert_message)
-
     try:
         #TODO: send push notification to iOS / Android
 
