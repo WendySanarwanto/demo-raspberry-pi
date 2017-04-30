@@ -9,10 +9,10 @@ import time
 import datetime
 import RPi.GPIO as GPIO
 
-from Alerts import InstaPush, Gmail
+from Alerts.InstaPush import InstaPush
+from Alerts.Mailers import Gmail, MailGun
 from Sensors import PIR
 from Utility import get_current_timestamp
-
 
 def compose_alert_message():
     """ A helper for composing messages to displays in sent alerts """
@@ -24,8 +24,8 @@ def compose_alert_message():
 
 def push_notification(alert_message):
     """ A helper for pushing alert to registered iOS/Android devices """
-    app_id = ""  # Enter your instapush's app id
-    app_secret = ""  # Enter your instapush's secret key
+    app_id = ""  # TODO: Enter your instapush's app id
+    app_secret = ""  # TODO: Enter your instapush's secret key
     push_event = "IntruderAlert" # Default name of instaPush's event to be used for pushing notification from.
     
     insta_push = InstaPush(app_id, app_secret, push_event)
@@ -33,14 +33,29 @@ def push_notification(alert_message):
     print(("D push notification's response = " + str(response)))
 
 def send_email():
-    """ A helper for sending alert as email, via google mail """
-    sender_email_address = "" # Enter sender's email address here
-    destination_email_address = ""  # Enter recipient's email address here
-    user = "" # Enter smtp's user 
-    password = "" # enter smtp's password
-    gmail = Gmail(sender_email_address, destination_email_address, user, password);
-    response = gmail.send_alert()
+    """ A helper for sending alert as email, via mailgun """
 
+    # TODO: Get email's provider from configuration
+    domain = "" # TODO: Write down your mail gun's domain 
+    api_key = ""  # TODO: Write down the API key here
+    sender_name = "" # TODO: Write down sender's name (e.g. admin, john)
+    sender_full_name = "" # TODO: Write down sender's full name (e.g. my company's admin, John Doe)
+    recipient_name = "" # TODO: Write down recipient's name (e.g. Jane Doe)
+    email_client = MailGun(domain, api_key)
+
+    _from = "%s<%s@%s" %s (sender_full_name, sender_name, domain)
+    to = "" # TODO: Write down the recipient's email address (e.g. john.doe@gmail.com)
+    subject = "[Motion Detection] Intruders detected !"
+    text = """ \
+    Hello %s,
+    
+    One of your Motion Detection IoT Device has sensed movement of intruders within its sensory range, at: %s.
+    
+    Cheers.
+    Next Research's Administrator
+    """ % (recipient_name, get_current_timestamp())
+
+    return email_client.send_mail(_from, to, subject, text)
 
 def on_intruders_detected():
     """
@@ -54,7 +69,7 @@ def on_intruders_detected():
         #send push notification to iOS / Android
         push_notification(alert_message)
 
-        #send email (gmail) alert
+        #send email alert
         send_email()
     except:
         print("Unexpected error when sending alert.")
