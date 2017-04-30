@@ -14,25 +14,6 @@ from Sensors import PIR
 from Utility import get_current_timestamp
 
 
-def compose_alert_message():
-    """ A helper for composing messages to displays in sent alerts """
-    current_timestamp = get_current_timestamp()
-    message = "\n Intruders detected  !\n Timestamp: " + current_timestamp
-    message += "\n"
-    return message
-
-
-def push_notification(alert_message):
-    """ A helper for pushing alert to registered iOS/Android devices """
-    app_id = ""  # TODO: Enter your instapush's app id
-    app_secret = ""  # TODO: Enter your instapush's secret key
-    push_event = "IntruderAlert" # Default name of instaPush's event to be used for pushing notification from.
-
-    insta_push = InstaPush(app_id, app_secret, push_event)
-    response = insta_push.request_push_notification(alert_message)
-    print(("D push notification's response = " + str(response)))
-
-
 def send_email():
     """ A helper for sending alert as email, via mailgun """
 
@@ -68,8 +49,7 @@ def on_intruders_detected():
     print(alert_message)
 
     try:
-        #send push notification to iOS / Android
-        push_notification(alert_message)
+        #TODO: send push notification to iOS / Android
 
         #send email alert
         send_email()
