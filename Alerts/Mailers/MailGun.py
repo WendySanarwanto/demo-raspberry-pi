@@ -3,7 +3,8 @@ import requests
 
 class MailGun:
     """
-        Provide methods for accessing mailing services provided by MailGun (https://www.mailgun.com/)
+        Provide methods for accessing mailing services provided by \
+        MailGun (https://www.mailgun.com/)
     """
 
     def __init__(self, domain, api_key):
@@ -15,7 +16,8 @@ class MailGun:
 
     def send_mail(self, _from, to, subject, text):
         """
-            Compose email message by specified 'from' email address, recipient's email address(es), subject and text
+            Compose email message by specified 'from' email address, \
+            recipient's email  address(es), subject and text
         """
         response = ""
         try:
@@ -26,6 +28,6 @@ class MailGun:
                             "to": to,
                             "subject": subject,
                             "text": text})
-        except Exception, exception:
+        except Exception as exception:
             response = exception.message
         return response

@@ -15,7 +15,8 @@ class PIR:
         GPIO.setup(self.GPIO_PIR, GPIO.IN)  # Read output from PIR motion sensor
 
     def do_read(self):
-        """ Reading value on GPIO pin, that is connected to PIR's output rail. """
+        """ Reading value on GPIO pin, that is connected to \
+            PIR's output rail. """
         return GPIO.input(self.GPIO_PIR)
 
     def do_cleanup(self):

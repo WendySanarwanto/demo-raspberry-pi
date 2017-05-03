@@ -49,9 +49,9 @@ def on_intruders_detected():
 
         #send email alert
         response = send_email()
-        print("Sending alert's Response: %s" % response)
+        print(("Sending alert's Response: %s" % response))
     except:
-        print("Unexpected error happened when sending alert at: " % get_current_timestamp())
+        print(("Unexpected error happened when sending alert at: " % get_current_timestamp()))
 
 
     # TODO: Do alerts or other actions here, for some time
