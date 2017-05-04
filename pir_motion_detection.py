@@ -45,6 +45,10 @@ def on_intruders_detected():
         when intruders are detected
     """
     try:
+        # Output to console terminal
+        print(("Intruders Detected ! Timestamp: %s \n"
+                % get_current_timestamp()))
+
         #TODO: send push notification to iOS / Android
 
         #send email alert
